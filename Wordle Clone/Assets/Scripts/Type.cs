@@ -7,7 +7,7 @@ public class Type : MonoBehaviour
 {
     public GameObject[] letters;
     public string letterInput = string.Empty;
-    public string testWord = "world";
+    public string testWord = "unity";
     public int placeHolder = 0;
     public int numTries = 0;
     public int currentTry;
@@ -43,7 +43,7 @@ public class Type : MonoBehaviour
 
             for (int i = placeHolder - 5; i < placeHolder; i++)
             {
-                letters[i].GetComponent<InputField>().GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+                CheckLetter(letters[i].GetComponent<InputField>());
             }
         }
 
@@ -60,6 +60,26 @@ public class Type : MonoBehaviour
         {
             // TODO: convert to uppercase
             // Debug.Log(letters[it-1].GetComponent<InputField>().text[0]);
+        }
+    }
+
+
+    private void CheckLetter(InputField field)
+    {
+        for (int i = 0; i < testWord.Length; i++)
+        {
+            if (field.text[0] == testWord[i])
+            {
+                field.GetComponent<Image>().color = Color.green;
+                Debug.Log(field.text[0]);
+                Debug.Log(testWord[i]);
+                Debug.Log("true");
+            }
+
+            else
+            {
+                field.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+            }
         }
     }
 }
