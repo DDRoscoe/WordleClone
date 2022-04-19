@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class Type : MonoBehaviour
 {
-    public GameObject[] letters;
-    public string stringInput; 
     public KeyCode[] desiredKeys = {KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J, KeyCode.K, KeyCode.L, 
     KeyCode.M, KeyCode.N, KeyCode.O, KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T, KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z};
-    public string letterInput = string.Empty;
-    public string testWord = "unity";
-    public int placeHolder = 0;
-    public int numTries = 0;
-    public int currentTry;
+    public GameObject[] letters;
+    public string stringInput; 
+    private string letterInput = string.Empty;
+    private string testWord = "voice";
+    private int placeHolder = 0;
+    private int currentTry;
     public int it = 0;
+    public int numTries = 0;
+    public int numCorrectLetters = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +39,7 @@ public class Type : MonoBehaviour
         return false;
     }
 
+
     private void CheckInput()
     {
         if (Input.GetKeyDown(KeyCode.Backspace) && it > 0)
@@ -47,7 +49,6 @@ public class Type : MonoBehaviour
         else if (isALetter() && !Input.GetKeyDown(KeyCode.Backspace) && it < 4)
         {
             it++;
-            Debug.Log(it);
         }
         else if (it == 4 && Input.GetKeyDown(KeyCode.Return) && placeHolder < 30)
         {
@@ -56,7 +57,12 @@ public class Type : MonoBehaviour
                 stringInput += letters[i].GetComponent<InputField>().text[0];
             }
 
-            CheckString(stringInput, letters, placeHolder);
+            CheckString();
+
+            if (numCorrectLetters == 5)
+            {
+                // TODO: You win
+            }
 
             letters[4].GetComponent<InputField>().DeactivateInputField();
             it = 0;
@@ -83,30 +89,32 @@ public class Type : MonoBehaviour
     }
 
 
-    private void CheckString(string stringInput, GameObject[] field, int placeHolder)
+    private void CheckString()
     {
+        numCorrectLetters = 0;
         // Check for completely right or completely wrong inputs
         for (int i = 0; i < testWord.Length; i++)
         {
             if (stringInput[i] == testWord[i])
             {
-                field[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.green;
+                letters[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.green;
+                numCorrectLetters++;
             }
             else
             {
-                field[i + placeHolder].GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+                letters[i + placeHolder].GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
             }
         }
 
-        // for (int i = 0; i < testWord.Length; i++)
-        // {
-        //     for (int j = 0; i < testWord.Length; j++)
-        //     {
-        //         if (stringInput[i] == testWord[j] && stringInput[i] != testWord[i])
-        //         {
-        //             field[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.yellow;
-        //         }
-        //     }
-        // }
+        for (int i = 0; i < testWord.Length; i++)
+        {
+            for (int j = 0; j < testWord.Length; j++)
+            {
+                if (stringInput[i] == testWord[j] && stringInput[i] != testWord[i])
+                {
+                    letters[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.yellow;
+                }
+            }
+        }
     }
 }
