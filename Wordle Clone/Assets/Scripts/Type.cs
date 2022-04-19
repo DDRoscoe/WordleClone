@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class Type : MonoBehaviour
 {
     public GameObject[] letters;
+    public string stringInput; 
+    public KeyCode[] desiredKeys = {KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J, KeyCode.K, KeyCode.L, 
+    KeyCode.M, KeyCode.N, KeyCode.O, KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T, KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z};
     public string letterInput = string.Empty;
     public string testWord = "unity";
     public int placeHolder = 0;
@@ -24,29 +27,45 @@ public class Type : MonoBehaviour
         CheckInput();
     }
 
+
+    private bool isALetter()
+    {
+        foreach (KeyCode keyToCheck in desiredKeys)
+        {
+            if (Input.GetKeyDown(keyToCheck))
+                return true;
+        }
+        return false;
+    }
+
     private void CheckInput()
     {
         if (Input.GetKeyDown(KeyCode.Backspace) && it > 0)
         {
             it--;
         }
-        else if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Backspace) && it < 4)
+        else if (isALetter() && !Input.GetKeyDown(KeyCode.Backspace) && it < 4)
         {
             it++;
+            Debug.Log(it);
         }
         else if (it == 4 && Input.GetKeyDown(KeyCode.Return) && placeHolder < 30)
         {
+            for (int i = placeHolder; i < placeHolder + 5; i++)     // fill the stringInput with characters
+            {
+                stringInput += letters[i].GetComponent<InputField>().text[0];
+            }
+
+            CheckString(stringInput, letters, placeHolder);
+
             letters[4].GetComponent<InputField>().DeactivateInputField();
             it = 0;
             numTries++;
             placeHolder += 5;
-
-            for (int i = placeHolder - 5; i < placeHolder; i++)
-            {
-                CheckLetter(letters[i].GetComponent<InputField>());
-            }
+            stringInput = "";
         }
 
+        // Activate the next input field
         if (numTries < 6)
         {
             letters[it + placeHolder].GetComponent<InputField>().ActivateInputField();
@@ -64,22 +83,30 @@ public class Type : MonoBehaviour
     }
 
 
-    private void CheckLetter(InputField field)
+    private void CheckString(string stringInput, GameObject[] field, int placeHolder)
     {
+        // Check for completely right or completely wrong inputs
         for (int i = 0; i < testWord.Length; i++)
         {
-            if (field.text[0] == testWord[i])
+            if (stringInput[i] == testWord[i])
             {
-                field.GetComponent<Image>().color = Color.green;
-                Debug.Log(field.text[0]);
-                Debug.Log(testWord[i]);
-                Debug.Log("true");
+                field[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.green;
             }
-
             else
             {
-                field.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+                field[i + placeHolder].GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 1);
             }
         }
+
+        // for (int i = 0; i < testWord.Length; i++)
+        // {
+        //     for (int j = 0; i < testWord.Length; j++)
+        //     {
+        //         if (stringInput[i] == testWord[j] && stringInput[i] != testWord[i])
+        //         {
+        //             field[i + placeHolder].GetComponent<InputField>().GetComponent<Image>().color = Color.yellow;
+        //         }
+        //     }
+        // }
     }
 }
