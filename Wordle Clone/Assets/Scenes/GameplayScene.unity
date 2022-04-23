@@ -988,14 +988,13 @@ GameObject:
   - component: {fileID: 143651317}
   - component: {fileID: 143651319}
   - component: {fileID: 143651318}
-  - component: {fileID: 143651320}
   m_Layer: 0
   m_Name: Game Over Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &143651317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1012,7 +1011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -296}
   m_SizeDelta: {x: 885.7739, y: 166.08002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143651318
@@ -1037,18 +1036,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
+    m_FontSize: 69
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 100
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME OVER
+  m_Text: 
 --- !u!222 &143651319
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1057,18 +1056,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143651316}
   m_CullTransparentMesh: 1
---- !u!114 &143651320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143651316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65c8c21b0c7b194c90ad69066de6310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &220873974
 GameObject:
   m_ObjectHideFlags: 0
@@ -6517,6 +6504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c6e97b0b8288142925e26ffa6810d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  desiredKeys: 6100000062000000630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a000000
+  gameOverText: {fileID: 143651316}
+  gameOver: 0
   letters:
   - {fileID: 283656344}
   - {fileID: 1009445193}
@@ -6549,13 +6539,10 @@ MonoBehaviour:
   - {fileID: 424089648}
   - {fileID: 969276648}
   stringInput: 
-  desiredKeys: 6100000062000000630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a000000
-  letterInput: 
-  testWord: foods
   placeHolder: 0
-  numTries: 0
-  currentTry: 0
   it: 0
+  numTries: 0
+  numCorrectLetters: 0
 --- !u!1 &1225432704
 GameObject:
   m_ObjectHideFlags: 0
